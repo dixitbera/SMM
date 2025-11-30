@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>All-in-One Tools</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f7fa;
+        }
+
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            background: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            border-bottom: 3px solid #007bff;
+            background: #eaf1ff;
+            color: #007bff;
+        }
+
+        .section {
+            display: none;
+            padding: 20px;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        textarea, input, button, pre {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .output-box {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body cz-shortcut-listen="true">
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <div class="tab active" onclick="showTab(0)">📄 Description Generator</div>
+        <div class="tab" onclick="showTab(1)">📢 Broadcast Generator</div>
+        <div class="tab" onclick="showTab(2)">🧮 Percentage Calculator</div>
+    </div>
+
+    <!-- Sections -->
+    <div class="section active" id="descriptionGen">
+        <label>📝 Paste Raw Material Below:</label>
+        <textarea id="rawInput" rows="8" placeholder="• Link: Instagram Profile Link
+• Speed: 100k/day
+• Refill: No Refill"></textarea>
+        <button onclick="generateDescription()">🛠️ Generate Description</button>
+        <button onclick="copyDescription()">📋 Copy</button>
+        <div class="output-box"><pre id="descriptionOutput"></pre></div>
+    </div>
+
+    <div class="section" id="broadcastGen">
+        <input type="text" id="serviceId" placeholder="🆔 Service ID (optional)">
+        <input type="text" id="title" placeholder="Service Title (e.g., 605 Instagram Likes - Fast)">
+        <input type="number" step="0.0001" id="inrPrice" placeholder="Enter price in ₹ INR">
+        <textarea id="notes" placeholder="Notes or highlights... (optional)" rows="3"></textarea>
+        <button onclick="generateBroadcast()">Generate Message</button>
+        <div class="output-box">
+            <strong>WhatsApp Message:</strong>
+            <pre id="broadcastOutput"></pre>
+            <button onclick="copyBroadcast()" style="margin-top: 10px;">📋 Copy</button>
+        </div>
+    </div>
+
+    <div class="section" id="calculator">
+        <input type="number" id="base" placeholder="Enter base number">
+        <input type="number" id="percent" placeholder="Enter %">
+        <button onclick="calculatePercent()">Calculate</button>
+        <div class="output-box" id="percentResult"></div>
+    </div>
+
+    <!-- Script -->
+    <script>
+        // Tab switching
+        function showTab(index) {
+            const tabs = document.querySelectorAll('.tab');
+            const sections = document.querySelectorAll('.section');
+            tabs.forEach((tab, i) => {
+                tab.classList.toggle('active', i === index);
+                sections[i].classList.toggle('active', i === index);
+            });
+        }
+
+        // Description Generator Logic
+        function generateDescription() {
+            const input = document.getElementById('rawInput').value;
+            const lines = input.split('\n').map(line => line.trim()).filter(Boolean);
+            const emojiMap = {
+                'start': '🕒 Start:',
+                'speed': '🚀 Speed:',
+                'quality': '⚜️ Quality:',
+                'location': '📍 Location:',
+                'drop': '💧 Drop:',
+                'refill': '♻️ Refill:',
+                'cancel': '🚫 Cancel:',
+                'link': '🔗 Link:'
+            };
+            const orderedKeys = ['start', 'speed', 'quality', 'location', 'drop', 'refill', 'cancel', 'link'];
+            const mapped = {};
+            const instructions = [];
+
+            lines.forEach(line => {
+                line = line.replace(/^[-•~]+/, '').trim();
+                const keyMap = {
+                    'start': 'start', 'speed': 'speed', 'quality': 'quality',
+                    'location': 'location', 'drop': 'drop', 'refill': 'refill',
+                    'cancel': 'cancel', 'link': 'link', 'example link': 'link'
+                };
+                const keyMatch = line.match(/^(.+?)\s*:\s*(.+)$/);
+                if (keyMatch) {
+                    const rawKey = keyMatch[1].toLowerCase();
+                    const value = keyMatch[2];
+                    for (let pattern in keyMap) {
+                        if (rawKey.includes(pattern)) {
+                            const mapKey = keyMap[pattern];
+                            mapped[mapKey] = `${emojiMap[mapKey]} ${value}`;
+                            return;
+                        }
+                    }
+                }
+                if (line.toLowerCase().startsWith('important') || /^[A-Z]/.test(line)) {
+                    instructions.push(`ℹ️ ${line}`);
+                }
+            });
+
+            let output = "";
+            orderedKeys.forEach(key => { if (mapped[key]) output += mapped[key] + "\n"; });
+            if (instructions.length > 0) output += "\n" + instructions.join('\n');
+
+            document.getElementById('descriptionOutput').innerText = output.trim();
+        }
+
+        function copyDescription() {
+            navigator.clipboard.writeText(document.getElementById('descriptionOutput').innerText)
+                .then(() => alert("✅ Copied to clipboard!"))
+                .catch(() => alert("❌ Copy failed."));
+        }
+function copyBroadcast() {
+    const text = document.getElementById('broadcastOutput').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        alert("✅ Broadcast message copied!");
+    }).catch(() => {
+        alert("❌ Failed to copy!");
+    });
+}
+
+        // Broadcast Generator Logic
+        async function getUsdRate() {
+            try {
+                const res = await fetch('https://api.exchangerate-api.com/v4/latest/INR');
+                const data = await res.json();
+                return data.rates.USD;
+            } catch {
+                return 0.012;
+            }
+        }
+
+        async function generateBroadcast() {
+            const title = document.getElementById('title').value.trim();
+            let id = document.getElementById('serviceId').value.trim();
+            const inr = parseFloat(document.getElementById('inrPrice').value.trim());
+            const notes = document.getElementById('notes').value.trim();
+            if (!title || isNaN(inr)) return alert("⚠️ Fill valid Title and INR Price.");
+            if (!id) {
+                const match = title.match(/\d{3,6}/);
+                if (match) id = match[0];
+                else return alert("⚠️ No Service ID found.");
+            }
+
+            const rate = await getUsdRate();
+            const usd = (inr * rate).toFixed(4);
+            let message = `> 🆔 *${id}* - *${title.replace(id, '').trim()}*\n\n\`₹${inr} | $${usd}\``;
+            if (notes) message += `\n\n${notes}`;
+            message += `\n\ntheprosmm.com 🌟`;
+
+            document.getElementById('broadcastOutput').innerText = message;
+        }
+
+        // Percentage Calculator Logic
+        function calculatePercent() {
+            const base = parseFloat(document.getElementById('base').value);
+            const percent = parseFloat(document.getElementById('percent').value);
+            if (isNaN(base) || isNaN(percent)) {
+                document.getElementById('percentResult').innerText = "⚠️ Enter valid numbers.";
+                return;
+            }
+            const result = base * (percent / 100);
+            const total = base + result;
+            document.getElementById('percentResult').innerText = `${percent}% of ${base} = ${result} → Total: ${total}`;
+        }
+    </script>
+
+
+</body></html>
