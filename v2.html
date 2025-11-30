@@ -1,1 +1,220 @@
-<h1>hi</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Generator | TheProSMM</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans&display=swap" rel="stylesheet">
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box; font-family: 'Merriweather Sans', sans-serif;}
+    body {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      background: rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 25px 35px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      max-width: 650px;
+      width: 100%;
+      backdrop-filter: blur(10px);
+    }
+    h2 {text-align: center; margin-bottom: 20px;}
+    .form-group {margin-bottom: 15px;}
+    label {display: block; margin-bottom: 5px;}
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+    }
+    button {
+      width: 100%;
+      background: #fff;
+      color: #2575fc;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {background: #2575fc; color: #fff;}
+    .output {
+      margin-top: 20px;
+      background: rgba(255,255,255,0.15);
+      padding: 15px;
+      border-radius: 10px;
+      word-wrap: break-word;
+    }
+    .copy-btn {
+      background: #fff;
+      color: #2575fc;
+      padding: 8px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+      margin-top: 8px;
+      font-size: 14px;
+      float: right;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>⚙️ TheProSMM Service Generator</h2>
+
+    <div class="form-group">
+      <label>Platform</label>
+      <select id="platform">
+        <option>Instagram</option>
+        <option>Facebook</option>
+        <option>Twitter</option>
+        <option>YouTube</option>
+        <option>Telegram</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Service Type</label>
+      <select id="type">
+        <option>Followers</option>
+        <option>Likes</option>
+        <option>Views</option>
+        <option>Comments</option>
+        <option>Subscribers</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Start Time (e.g., 0–5 Min)</label>
+      <input type="text" id="startTime" placeholder="Enter start time...">
+    </div>
+
+    <div class="form-group">
+      <label>Speed (e.g., 10k/day)</label>
+      <input type="text" id="speed" placeholder="Enter speed...">
+    </div>
+
+    <div class="form-group">
+      <label>Quality</label>
+      <input type="text" id="quality" placeholder="Enter quality...">
+    </div>
+
+    <div class="form-group">
+      <label>Refill</label>
+      <select id="refill">
+        <option value="No">No</option>
+        <option value="Yes">Yes</option>
+      </select>
+      <input type="text" id="refillDays" placeholder="Days or Lifetime" style="display:none; margin-top:5px;">
+    </div>
+
+    <div class="form-group">
+      <label>Cancel</label>
+      <select id="cancel">
+        <option>Yes</option>
+        <option>No</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Drop (%)</label>
+      <input type="text" id="drop" placeholder="Enter drop rate...">
+    </div>
+
+    <div class="form-group">
+      <label>Link</label>
+      <input type="text" id="link" placeholder="Enter service link...">
+    </div>
+
+    <div class="form-group">
+      <label>Other Info (Optional)</label>
+      <input type="text" id="xyz" placeholder="Enter extra info (optional)...">
+    </div>
+
+    <button onclick="generateService()">Generate Service</button>
+
+    <div class="output" id="output" style="display:none;">
+      <h4>🧾 Service Name:</h4>
+      <p id="serviceName"></p>
+      <button class="copy-btn" onclick="copyText('serviceName')">Copy</button>
+
+      <h4 style="margin-top:20px;">📜 Description:</h4>
+      <p id="serviceDesc"></p>
+      <button class="copy-btn" onclick="copyText('serviceDesc')">Copy</button>
+    </div>
+  </div>
+
+  <script>
+    const refillSelect = document.getElementById('refill');
+    const refillDaysInput = document.getElementById('refillDays');
+    refillSelect.addEventListener('change', () => {
+      refillDaysInput.style.display = refillSelect.value === 'Yes' ? 'block' : 'none';
+    });
+
+    function generateService() {
+      const platform = document.getElementById('platform').value;
+      const type = document.getElementById('type').value;
+      const startTime = document.getElementById('startTime').value;
+      const speed = document.getElementById('speed').value;
+      const quality = document.getElementById('quality').value;
+      const refill = document.getElementById('refill').value;
+      const refillDays = document.getElementById('refillDays').value;
+      const cancel = document.getElementById('cancel').value;
+      const drop = document.getElementById('drop').value;
+      const link = document.getElementById('link').value;
+      const xyz = document.getElementById('xyz').value;
+
+      const refillText = refill === 'Yes' ? `♻️ ${refillDays}` : '';
+      const cancelText = cancel === 'Yes' ? '⛔ Cancel' : '';
+      const dropText = `💧 ${drop}% Drop`;
+      const speedText = `💨 ${speed}`;
+      const startText = `🎯 ${startTime}`;
+      const qualityText = `♣️ ${quality}`;
+
+      // Service Name
+      const serviceName = `${platform} ${type} | ${startText} | ${speedText} | ${qualityText} | ${refillText} | ${cancelText} | ${dropText}`;
+      document.getElementById('serviceName').innerText = serviceName;
+
+      // Description
+      let description = `
+🎯 Start: ${startTime}
+💨 Speed: ${speed}
+♣️ Quality: ${quality}
+💧 Drop: ${drop}%
+♻️ Refill: ${refill === 'Yes' ? refillDays : 'No'}
+⛔ Cancel: ${cancel}
+🧷️ Link: ${link}
+`;
+
+      if (xyz.trim() !== '') {
+        description += `${xyz}\n`;
+      }
+
+      description += `
+❒ Important Notes:
+✦ During peak demand, speed and start times may vary.
+✦ Please avoid placing a new order on the same link until the current order is fully processed.
+✦ In case of any issues, kindly contact support.
+`;
+
+      document.getElementById('serviceDesc').innerText = description.trim();
+      document.getElementById('output').style.display = 'block';
+    }
+
+    function copyText(id) {
+      const text = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text);
+      alert('Copied to clipboard!');
+    }
+  </script>
+</body>
+</html>
