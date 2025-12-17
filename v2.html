@@ -31,7 +31,7 @@
       padding: 25px 30px;
       border-radius: 16px;
       width: 100%;
-      max-width: 700px;
+      max-width: 720px;
       box-shadow: 0 12px 30px rgba(0,0,0,0.25);
     }
 
@@ -96,6 +96,10 @@
       cursor: pointer;
       font-size: 13px;
     }
+
+    #serviceDesc {
+      white-space: pre-line;
+    }
   </style>
 </head>
 
@@ -129,19 +133,11 @@
   <div class="form-group">
     <label>Quality</label>
     <input type="text" id="quality" placeholder="Mix / Real / HQ">
-    <div class="toggle">
-      Emoji:
-      <input type="checkbox" disabled> (Always OFF)
-    </div>
   </div>
 
   <div class="form-group">
     <label>Start Time</label>
     <input type="text" id="startTime" placeholder="0–30 Min">
-    <div class="toggle">
-      Emoji:
-      <input type="checkbox" disabled> (Always OFF)
-    </div>
   </div>
 
   <div class="form-group">
@@ -150,19 +146,11 @@
       <option>Yes</option>
       <option>No</option>
     </select>
-    <div class="toggle">
-      Emoji:
-      <input type="checkbox" disabled> (Always OFF)
-    </div>
   </div>
 
   <div class="form-group">
     <label>Drop (%)</label>
     <input type="text" id="drop" placeholder="0">
-    <div class="toggle">
-      Emoji:
-      <input type="checkbox" disabled> (Always OFF)
-    </div>
   </div>
 
   <div class="form-group">
@@ -172,10 +160,6 @@
       <option>Yes</option>
     </select>
     <input type="text" id="refillDays" placeholder="Days / Lifetime" style="display:none;margin-top:6px;">
-    <div class="toggle">
-      Emoji:
-      <input type="checkbox" id="emojiRefill" checked> (Default ON)
-    </div>
   </div>
 
   <div class="form-group">
@@ -183,8 +167,18 @@
     <input type="text" id="speed" placeholder="100K/day">
     <div class="toggle">
       Emoji:
-      <input type="checkbox" id="emojiSpeed" checked> (Default ON)
+      <input type="checkbox" id="emojiSpeed" checked>
     </div>
+  </div>
+
+  <div class="form-group">
+    <label>Link</label>
+    <input type="text" id="link" placeholder="Enter service link">
+  </div>
+
+  <div class="form-group">
+    <label>Other Info (Optional)</label>
+    <input type="text" id="xyz" placeholder="Extra info (optional)">
   </div>
 
   <button onclick="generateService()">Generate Service</button>
@@ -193,15 +187,19 @@
     <h4>🧾 Service Name</h4>
     <p id="serviceName"></p>
     <button class="copy-btn" onclick="copyText('serviceName')">Copy</button>
+
+    <h4 style="margin-top:20px;">📜 Description</h4>
+    <p id="serviceDesc"></p>
+    <button class="copy-btn" onclick="copyText('serviceDesc')">Copy</button>
   </div>
 </div>
 
 <script>
-  const refillSelect = document.getElementById('refill');
-  const refillDays = document.getElementById('refillDays');
+  const refillEl = document.getElementById('refill');
+  const refillDaysEl = document.getElementById('refillDays');
 
-  refillSelect.addEventListener('change', () => {
-    refillDays.style.display = refillSelect.value === 'Yes' ? 'block' : 'none';
+  refillEl.addEventListener('change', () => {
+    refillDaysEl.style.display = refillEl.value === 'Yes' ? 'block' : 'none';
   });
 
   function generateService() {
@@ -212,22 +210,49 @@
     const cancel = cancelEl.value;
     const drop = dropEl.value;
     const refill = refillEl.value;
-    const refillText = refill === 'Yes' ? refillDays.value : 'No Refill';
+    const refillText = refill === 'Yes' ? refillDaysEl.value : 'No Refill';
     const speed = speedEl.value;
+    const link = linkEl.value;
+    const xyz = xyzEl.value;
 
     const speedEmoji = emojiSpeed.checked ? '💨 ' : '';
-   const refillFinalEmoji = refill === 'Yes' ? '♻️ ' : '⚠️ ';
+    const refillEmoji = refill === 'Yes' ? '♻️ ' : '⚠️ ';
 
+    // SERVICE NAME
     const serviceName =
       `${platform} ${type} | ` +
       `${quality} Quality | ` +
-      `${start} | Start ` +
-      `${cancel} | ` +
+      `${start} Start |  ` +
+      `Cancel ${cancel} | ` +
       `${drop}% Drop | ` +
-      `${refillFinalEmoji}${refillText} Refill | ` +
+      `${refillEmoji}${refillText} Refill | ` +
       `Speed ${speedEmoji}${speed}`;
 
     document.getElementById('serviceName').innerText = serviceName;
+
+    // DESCRIPTION (NO CHANGE)
+    let description = `
+🎯 Start: ${start}
+💨 Speed: ${speed}
+♣️ Quality: ${quality}
+💧 Drop: ${drop}%
+♻️ Refill: ${refill === 'Yes' ? refillDaysEl.value : 'No'}
+⛔ Cancel: ${cancel}
+🧷️ Link: ${link}
+`;
+
+    if (xyz.trim() !== '') {
+      description += `${xyz}\n`;
+    }
+
+    description += `
+❒ Important Notes:
+✦ During peak demand, speed and start times may vary.
+✦ Please avoid placing a new order on the same link until the current order is fully processed.
+✦ In case of any issues, kindly contact support.
+`;
+
+    document.getElementById('serviceDesc').innerText = description.trim();
     document.getElementById('output').style.display = 'block';
   }
 
@@ -242,8 +267,10 @@
   const startTimeEl = document.getElementById('startTime');
   const cancelEl = document.getElementById('cancel');
   const dropEl = document.getElementById('drop');
-  const refillEl = document.getElementById('refill');
   const speedEl = document.getElementById('speed');
+  const emojiSpeed = document.getElementById('emojiSpeed');
+  const linkEl = document.getElementById('link');
+  const xyzEl = document.getElementById('xyz');
 </script>
 
 </body>
