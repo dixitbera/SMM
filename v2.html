@@ -1,277 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Service Generator | TheProSMM</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Generator | TheProSMM</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans&display=swap" rel="stylesheet">
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Merriweather Sans', sans-serif;
-    }
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Merriweather Sans', sans-serif;
+        }
 
-    body {
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
+        body {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-    .container {
-      background: rgba(255,255,255,0.12);
-      backdrop-filter: blur(12px);
-      padding: 25px 30px;
-      border-radius: 16px;
-      width: 100%;
-      max-width: 720px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
-    }
+        .container {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            padding: 25px 30px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 720px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
 
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-    .form-group {
-      margin-bottom: 14px;
-    }
+        .form-group {
+            margin-bottom: 14px;
+        }
 
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 14px;
-    }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
 
-    input, select {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-      outline: none;
-    }
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+        }
 
-    .toggle {
-      margin-top: 5px;
-      font-size: 13px;
-    }
+        .toggle {
+            margin-top: 5px;
+            font-size: 13px;
+        }
 
-    button {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      background: #fff;
-      color: #2575fc;
-      font-weight: 600;
-      transition: 0.3s;
-    }
+        button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            background: #fff;
+            color: #2575fc;
+            font-weight: 600;
+            transition: 0.3s;
+        }
 
-    button:hover {
-      background: #2575fc;
-      color: #fff;
-    }
+        button:hover {
+            background: #2575fc;
+            color: #fff;
+        }
 
-    .output {
-      margin-top: 20px;
-      background: rgba(255,255,255,0.15);
-      padding: 15px;
-      border-radius: 10px;
-    }
+        .output {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            border-radius: 10px;
+        }
 
-    .copy-btn {
-      float: right;
-      margin-top: 8px;
-      padding: 6px 10px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      font-size: 13px;
-    }
+        .copy-btn {
+            float: right;
+            margin-top: 8px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+        }
 
-    #serviceDesc {
-      white-space: pre-line;
-    }
-  </style>
+        #serviceDesc {
+            white-space: pre-line;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container">
-  <h2>⚙️ TheProSMM Service Generator</h2>
+    <div class="container">
+        <h2>⚙️ TheProSMM Service Generator</h2>
 
-  <div class="form-group">
-    <label>Platform</label>
-    <select id="platform">
-      <option>Instagram</option>
-      <option>Facebook</option>
-      <option>Twitter</option>
-      <option>YouTube</option>
-      <option>Telegram</option>
-    </select>
-  </div>
+        <div class="form-group">
+            <label>Platform</label>
+            <select id="platform">
+                <option>Instagram</option>
+                <option>Facebook</option>
+                <option>Twitter</option>
+                <option>YouTube</option>
+                <option>Telegram</option>
+            </select>
+        </div>
 
-  <div class="form-group">
-    <label>Service Type</label>
-    <select id="type">
-      <option>Followers</option>
-      <option>Likes</option>
-      <option>Views</option>
-      <option>Comments</option>
-      <option>Subscribers</option>
-    </select>
-  </div>
+        <div class="form-group">
+            <label>Service Type</label>
+            <select id="type">
+                <option>Followers</option>
+                <option>Likes</option>
+                <option>Views</option>
+                <option>Comments</option>
+                <option>Subscribers</option>
+            </select>
+        </div>
 
-  <div class="form-group">
-    <label>Quality</label>
-    <input type="text" id="quality" placeholder="Mix / Real / HQ">
-  </div>
+        <div class="form-group">
+            <label>Quality</label>
+            <input type="text" id="quality" placeholder="Mix / Real / HQ">
+        </div>
 
-  <div class="form-group">
-    <label>Start Time</label>
-    <input type="text" id="startTime" placeholder="0–30 Min">
-  </div>
+        <div class="form-group">
+            <label>Start Time</label>
+            <input type="text" id="startTime" placeholder="0–30 Min">
+        </div>
 
-  <div class="form-group">
-    <label>Cancel</label>
-    <select id="cancel">
-      <option>Yes</option>
-      <option>No</option>
-    </select>
-  </div>
+        <div class="form-group">
+            <label>Cancel</label>
+            <select id="cancel">
+                <option>Yes</option>
+                <option>No</option>
+            </select>
+        </div>
 
-  <div class="form-group">
-    <label>Drop (%)</label>
-    <input type="text" id="drop" placeholder="0">
-  </div>
+        <div class="form-group">
+            <label>Drop (%)</label>
+            <input type="text" id="drop" placeholder="0">
+        </div>
 
-  <div class="form-group">
-    <label>Refill</label>
-    <select id="refill">
-      <option>No</option>
-      <option>Yes</option>
-    </select>
-    <input type="text" id="refillDays" placeholder="Days / Lifetime" style="display:none;margin-top:6px;">
-  </div>
+        <div class="form-group">
+            <label>Refill</label>
+            <select id="refill">
+                <option>No</option>
+                <option>Yes</option>
+            </select>
+            <input type="text" id="refillDays" placeholder="Days / Lifetime" style="display:none;margin-top:6px;">
+        </div>
 
-  <div class="form-group">
-    <label>Speed</label>
-    <input type="text" id="speed" placeholder="100K/day">
-    <div class="toggle">
-      Emoji:
-      <input type="checkbox" id="emojiSpeed" checked>
+        <div class="form-group">
+            <label>Speed</label>
+            <input type="text" id="speed" placeholder="100K/day">
+            <div class="toggle">
+                Emoji:
+                <input type="checkbox" id="emojiSpeed" checked>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Link</label>
+            <input type="text" id="link" placeholder="Enter service link">
+        </div>
+
+        <div class="form-group">
+            <label>Other Info (Optional)</label>
+            <input type="text" id="xyz" placeholder="Extra info (optional)">
+        </div>
+
+        <button onclick="generateService()">Generate Service</button>
+
+        <div class="output" id="output" style="display:none;">
+            <h4>🧾 Service Name</h4>
+            <p id="serviceName"></p>
+            <button class="copy-btn" onclick="copyText('serviceName')">Copy</button>
+
+            <h4 style="margin-top:20px;">📜 Description</h4>
+            <p id="serviceDesc"></p>
+            <button class="copy-btn" onclick="copyText('serviceDesc')">Copy</button>
+        </div>
     </div>
-  </div>
 
-  <div class="form-group">
-    <label>Link</label>
-    <input type="text" id="link" placeholder="Enter service link">
-  </div>
+    <script>
+        const refillEl = document.getElementById('refill');
+        const refillDaysEl = document.getElementById('refillDays');
 
-  <div class="form-group">
-    <label>Other Info (Optional)</label>
-    <input type="text" id="xyz" placeholder="Extra info (optional)">
-  </div>
+        refillEl.addEventListener('change', () => {
+            refillDaysEl.style.display = refillEl.value === 'Yes' ? 'block' : 'none';
+        });
 
-  <button onclick="generateService()">Generate Service</button>
+        function generateService() {
+            const platform = platformEl.value;
+            const type = typeEl.value;
+            const quality = qualityEl.value;
+            const start = startTimeEl.value;
+            const cancel = cancelEl.value;
+            const drop = dropEl.value;
+            const refill = refillEl.value;
+            const refillText = refill === 'Yes' ? refillDaysEl.value : 'No';
+            const speed = speedEl.value;
+            const link = linkEl.value;
+            const xyz = xyzEl.value;
 
-  <div class="output" id="output" style="display:none;">
-    <h4>🧾 Service Name</h4>
-    <p id="serviceName"></p>
-    <button class="copy-btn" onclick="copyText('serviceName')">Copy</button>
+            const speedEmoji = emojiSpeed.checked ? '💨 ' : '';
+            const refillEmoji = refill === 'Yes' ? '♻️ ' : '⚠️ ';
 
-    <h4 style="margin-top:20px;">📜 Description</h4>
-    <p id="serviceDesc"></p>
-    <button class="copy-btn" onclick="copyText('serviceDesc')">Copy</button>
-  </div>
-</div>
+            // SERVICE NAME
+            const serviceName =
+                `${platform} ${type} | ` +
+                `${quality} Quality | ` +
+                `${start} Start |  ` +
+               `${ cancel === 'Yes' ? `Cancel ${cancel} ⛔ | ` : ''}`+
+                `${drop}% Drop | ` +
+                `${refillText} Refill ${refillEmoji} | ` +
+                `Speed ${speed} ${speedEmoji}`;
 
-<script>
-  const refillEl = document.getElementById('refill');
-  const refillDaysEl = document.getElementById('refillDays');
+            document.getElementById('serviceName').innerText = serviceName;
 
-  refillEl.addEventListener('change', () => {
-    refillDaysEl.style.display = refillEl.value === 'Yes' ? 'block' : 'none';
-  });
-
-  function generateService() {
-    const platform = platformEl.value;
-    const type = typeEl.value;
-    const quality = qualityEl.value;
-    const start = startTimeEl.value;
-    const cancel = cancelEl.value;
-    const drop = dropEl.value;
-    const refill = refillEl.value;
-    const refillText = refill === 'Yes' ? refillDaysEl.value : 'No Refill';
-    const speed = speedEl.value;
-    const link = linkEl.value;
-    const xyz = xyzEl.value;
-
-    const speedEmoji = emojiSpeed.checked ? '💨 ' : '';
-    const refillEmoji = refill === 'Yes' ? '♻️ ' : '⚠️ ';
-
-    // SERVICE NAME
-    const serviceName =
-      `${platform} ${type} | ` +
-      `${quality} Quality | ` +
-      `${start} Start |  ` +
-      `Cancel ${cancel} | ` +
-      `${drop}% Drop | ` +
-      `${refillEmoji}${refillText} Refill | ` +
-      `Speed ${speedEmoji}${speed}`;
-
-    document.getElementById('serviceName').innerText = serviceName;
-
-    // DESCRIPTION (NO CHANGE)
-    let description = `
+            // DESCRIPTION (NO CHANGE)
+            let description = `
 🎯 Start: ${start}
 💨 Speed: ${speed}
 ♣️ Quality: ${quality}
 💧 Drop: ${drop}%
 ♻️ Refill: ${refill === 'Yes' ? refillDaysEl.value : 'No'}
 ⛔ Cancel: ${cancel}
-🧷️ Link: ${link}
+🧷️ Link: ${platform} ${link} Link 
 `;
 
-    if (xyz.trim() !== '') {
-      description += `${xyz}\n`;
-    }
+            if (xyz.trim() !== '') {
+                description += `${xyz}\n`;
+            }
 
-    description += `
+            description += `
 ❒ Important Notes:
 ✦ During peak demand, speed and start times may vary.
 ✦ Please avoid placing a new order on the same link until the current order is fully processed.
 ✦ In case of any issues, kindly contact support.
 `;
 
-    document.getElementById('serviceDesc').innerText = description.trim();
-    document.getElementById('output').style.display = 'block';
-  }
+            document.getElementById('serviceDesc').innerText = description.trim();
+            document.getElementById('output').style.display = 'block';
+        }
 
-  function copyText(id) {
-    navigator.clipboard.writeText(document.getElementById(id).innerText);
-    alert("Copied!");
-  }
+        function copyText(id) {
+            navigator.clipboard.writeText(document.getElementById(id).innerText);
+            alert("Copied!");
+        }
 
-  const platformEl = document.getElementById('platform');
-  const typeEl = document.getElementById('type');
-  const qualityEl = document.getElementById('quality');
-  const startTimeEl = document.getElementById('startTime');
-  const cancelEl = document.getElementById('cancel');
-  const dropEl = document.getElementById('drop');
-  const speedEl = document.getElementById('speed');
-  const emojiSpeed = document.getElementById('emojiSpeed');
-  const linkEl = document.getElementById('link');
-  const xyzEl = document.getElementById('xyz');
-</script>
+        const platformEl = document.getElementById('platform');
+        const typeEl = document.getElementById('type');
+        const qualityEl = document.getElementById('quality');
+        const startTimeEl = document.getElementById('startTime');
+        const cancelEl = document.getElementById('cancel');
+        const dropEl = document.getElementById('drop');
+        const speedEl = document.getElementById('speed');
+        const emojiSpeed = document.getElementById('emojiSpeed');
+        const linkEl = document.getElementById('link');
+        const xyzEl = document.getElementById('xyz');
+    </script>
 
 </body>
+
 </html>
